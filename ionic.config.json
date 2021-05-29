@@ -1,0 +1,7 @@
+{
+  "name": "getpet",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
