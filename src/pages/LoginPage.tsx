@@ -8,6 +8,7 @@ import { useState, useEffect, useContext } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 import UserContext from '../context/user';
+import http from '../utils/http';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -18,13 +19,27 @@ const LoginPage: React.FC = () => {
 
     const handleLogin = () => {
         present('מתחבר');
-        setTimeout(() => {
-            setUser({
-                loggedIn: true
-            });
-            history.push('/');
-            dismiss();
-        }, 1000);
+        
+        (async () => {
+            try {
+                const result = await http('/api/user/login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+                console.log(result);
+                setUser({
+                    loggedIn: true
+                });
+                history.push('/');
+            } catch {
+
+            } finally {
+                dismiss();
+            }
+        })()
     };
 
     return (
