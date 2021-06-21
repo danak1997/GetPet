@@ -31,7 +31,8 @@ const LoginPage: React.FC = () => {
                 });
                 console.log(result);
                 setUser({
-                    loggedIn: true
+                    loggedIn: true,
+                    name: 'דניאלה המחוברת'
                 });
                 history.push('/');
             } catch {

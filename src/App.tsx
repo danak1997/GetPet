@@ -9,7 +9,7 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { search, home, paw, settings } from 'ionicons/icons';
+import { search, home, paw, settings, camera } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -36,6 +36,9 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import UserContext from './context/user';
 import { useState } from 'react';
+import SearchPage from './pages/SearchPage';
+import CameraPage from './pages/CameraPage';
+import AdoptPage from './pages/AdoptPage';
 
 const tabs = [
   {
@@ -49,6 +52,12 @@ const tabs = [
     href: '/adopt',
     icon: paw,
     label: 'אמץ'
+  },
+  {
+    id: 'camera',
+    href: '/camera',
+    icon: camera,
+    label: 'צלם'
   },
   {
     id: 'search',
@@ -66,7 +75,8 @@ const tabs = [
 
 const App: React.FC = () => {
   const [user, setUser] = useState({
-    loggedIn: false
+    loggedIn: false,
+    name: 'דניאלה'
   });
 
   return (
@@ -80,10 +90,13 @@ const App: React.FC = () => {
                   <HomePage />
                 </Route>
                 <Route exact path="/adopt">
-                  <Tab2 />
+                  <AdoptPage />
                 </Route>
                 <Route path="/search">
-                  <Tab3 />
+                  <SearchPage />
+                </Route>
+                <Route path="/camera">
+                  <CameraPage />
                 </Route>
                 <Route exact path="/">
                   <Redirect to="/home" />
