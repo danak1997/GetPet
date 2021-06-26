@@ -10,9 +10,8 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { search, home, paw, settings, camera } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+
+import './App.css';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -75,7 +74,7 @@ const tabs = [
 
 const App: React.FC = () => {
   const [user, setUser] = useState({
-    loggedIn: false,
+    loggedIn: true,
     name: 'דניאלה'
   });
 

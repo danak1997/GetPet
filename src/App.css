@@ -1,0 +1,31 @@
+.ios .full-page {
+    height: calc(100% - 48px);
+}
+
+.md .full-page {
+    height: calc(100% - 20px);
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+ 
+.bottom-stick {
+    margin-top: auto;
+}
+
+.bg-inherit {
+    background: inherit;
+}
