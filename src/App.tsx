@@ -7,6 +7,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonLoading,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { search, home, paw, settings, camera } from 'ionicons/icons';
@@ -33,11 +34,14 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
-import UserContext from './context/user';
-import { useState } from 'react';
+import UserContext, { User } from './context/user';
+import { useEffect, useState } from 'react';
 import SearchPage from './pages/SearchPage';
 import CameraPage from './pages/CameraPage';
 import AdoptPage from './pages/AdoptPage';
+import { hasToken } from './utils/auth';
+import http from './utils/http';
+import SettingsPage from './pages/SettingsPage';
 
 const tabs = [
   {
@@ -73,14 +77,29 @@ const tabs = [
 ]
 
 const App: React.FC = () => {
-  const [user, setUser] = useState({
-    loggedIn: true,
-    name: 'דניאלה'
+  const [user, setUser] = useState<User>({
+    loggedIn: hasToken()
   });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      if (user.loggedIn && !user.name) {
+        setLoading(true);
+        const userData = await http('/api/user', { method: 'GET' });
+        setUser({
+          ...user,
+          ...userData
+        });
+        setLoading(false);
+      }
+    })();
+  }, [user.loggedIn]);
 
   return (
     <UserContext.Provider value={[user, setUser]}>
       <IonApp dir="rtl">
+        <IonLoading isOpen={loading} message="טוען מידע" />
         <IonReactRouter>
           {user.loggedIn ? (
             <IonTabs>
@@ -96,6 +115,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/camera">
                   <CameraPage />
+                </Route>
+                <Route path="/settings">
+                  <SettingsPage />
                 </Route>
                 <Route exact path="/">
                   <Redirect to="/home" />

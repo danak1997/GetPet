@@ -1,8 +1,16 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 
-interface User {
+export interface User {
     loggedIn: boolean;
-    name: string;
+    name?: string;
+    savedPets?: [{
+        id: string,
+        name: string,
+        description: string,
+        profilePhoto: string,
+        tags: string[],
+        updatedAt: string
+    }]
 }
 
 type UserCtx = [User, Dispatch<SetStateAction<User>>];

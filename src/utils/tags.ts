@@ -9,7 +9,7 @@ export const tags = {
 
 export const tagsData = {
     [tags.houseTrained]: {
-        text: 'מכונך לצרכים',
+        text: 'מחונך לצרכים',
         icon: home,
         color: colors[0]
     },

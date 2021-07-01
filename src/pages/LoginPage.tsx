@@ -9,6 +9,7 @@ import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 import UserContext from '../context/user';
 import http from '../utils/http';
+import { saveToken } from '../utils/auth';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -22,21 +23,22 @@ const LoginPage: React.FC = () => {
         
         (async () => {
             try {
-                const result = await http('/api/user/login', {
+                const { token } = await http('/api/user/login', {
                     method: 'POST',
                     body: JSON.stringify({
                         email,
                         password
                     })
                 });
-                console.log(result);
+
+                if (!token) throw new Error('Invalid Token');
+
+                saveToken(token);
                 setUser({
-                    loggedIn: true,
-                    name: 'דניאלה המחוברת'
+                    loggedIn: true
                 });
                 history.push('/');
             } catch {
-
             } finally {
                 dismiss();
             }

@@ -28,7 +28,7 @@ const CameraPage: React.FC = () => {
                         <IonTitle size="large">צלם כלב</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonButton onClick={getPhoto}>צלם תמונה</IonButton>
+                <IonButton expand="block" onClick={getPhoto}>צלם תמונה</IonButton>
                 {img && <IonImg src={img} />}
             </IonContent>
         </IonPage>
