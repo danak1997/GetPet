@@ -1,16 +1,10 @@
 import { createContext, Dispatch, SetStateAction } from "react";
+import { Pet } from './pets';
 
 export interface User {
     loggedIn: boolean;
     name?: string;
-    savedPets?: [{
-        id: string,
-        name: string,
-        description: string,
-        profilePhoto: string,
-        tags: string[],
-        updatedAt: string
-    }]
+    savedPets?: Pet[];
 }
 
 type UserCtx = [User, Dispatch<SetStateAction<User>>];

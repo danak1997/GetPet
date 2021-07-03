@@ -42,6 +42,7 @@ import AdoptPage from './pages/AdoptPage';
 import { hasToken } from './utils/auth';
 import http from './utils/http';
 import SettingsPage from './pages/SettingsPage';
+import PetsContext, { PetsState } from './context/pets';
 
 const tabs = [
   {
@@ -80,6 +81,7 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User>({
     loggedIn: hasToken()
   });
+  const [petsState, setPetsState] = useState<PetsState>({ pets: [] });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -98,47 +100,49 @@ const App: React.FC = () => {
 
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <IonApp dir="rtl">
-        <IonLoading isOpen={loading} message="טוען מידע" />
-        <IonReactRouter>
-          {user.loggedIn ? (
-            <IonTabs>
-              <IonRouterOutlet>
-                <Route exact path="/home">
-                  <HomePage />
-                </Route>
-                <Route exact path="/adopt">
-                  <AdoptPage />
-                </Route>
-                <Route path="/search">
-                  <SearchPage />
-                </Route>
-                <Route path="/camera">
-                  <CameraPage />
-                </Route>
-                <Route path="/settings">
-                  <SettingsPage />
-                </Route>
-                <Route exact path="/">
-                  <Redirect to="/home" />
-                </Route>
-              </IonRouterOutlet>
-              <IonTabBar slot="bottom">
-                {tabs.map((tab) => (
-                  <IonTabButton tab={tab.id} href={tab.href} key={tab.id}>
-                    <IonIcon icon={tab.icon} />
-                    <IonLabel>{tab.label}</IonLabel>
-                  </IonTabButton>
-                ))}
-              </IonTabBar>
-            </IonTabs>
-          ) : (
-            <Route path="*">
-              <LoginPage />
-            </Route>
-          )}
-        </IonReactRouter>
-      </IonApp>
+      <PetsContext.Provider value={[petsState, setPetsState]}>
+        <IonApp dir="rtl">
+          <IonLoading isOpen={loading} message="טוען מידע" />
+          <IonReactRouter>
+            {user.loggedIn ? (
+              <IonTabs>
+                <IonRouterOutlet>
+                  <Route exact path="/home">
+                    <HomePage />
+                  </Route>
+                  <Route exact path="/adopt">
+                    <AdoptPage />
+                  </Route>
+                  <Route path="/search">
+                    <SearchPage />
+                  </Route>
+                  <Route path="/camera">
+                    <CameraPage />
+                  </Route>
+                  <Route path="/settings">
+                    <SettingsPage />
+                  </Route>
+                  <Route exact path="/">
+                    <Redirect to="/home" />
+                  </Route>
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                  {tabs.map((tab) => (
+                    <IonTabButton tab={tab.id} href={tab.href} key={tab.id}>
+                      <IonIcon icon={tab.icon} />
+                      <IonLabel>{tab.label}</IonLabel>
+                    </IonTabButton>
+                  ))}
+                </IonTabBar>
+              </IonTabs>
+            ) : (
+              <Route path="*">
+                <LoginPage />
+              </Route>
+            )}
+          </IonReactRouter>
+        </IonApp>
+      </PetsContext.Provider>
     </UserContext.Provider>
   );
 };
