@@ -96,7 +96,7 @@ const App: React.FC = () => {
         setLoading(false);
       }
     })();
-  }, [user.loggedIn]);
+  }, [user, user.loggedIn]);
 
   return (
     <UserContext.Provider value={[user, setUser]}>

@@ -1,5 +1,5 @@
-import { IonButton, IonContent, IonHeader, IonImg, IonPage, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { IonButton, IonContent, IonHeader, IonImg, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useState } from 'react';
 import usePhotoGallery from '../utils/usePhotoGallery';
 
 const CameraPage: React.FC = () => {

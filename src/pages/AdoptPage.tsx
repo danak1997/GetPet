@@ -1,8 +1,8 @@
-import { IonContent, IonHeader, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonTitle, IonToolbar, IonIcon, IonChip, IonImg, IonLabel, IonItem, IonButton } from '@ionic/react';
+import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonChip, IonLabel } from '@ionic/react';
 import { heartCircleOutline, chevronForward, chevronBack } from 'ionicons/icons';
 import { useState } from 'react';
 import { usePets } from '../context/pets';
-import { tags, tagsData } from '../utils/tags';
+import { tagsData } from '../utils/tags';
 
 import './AdoptPage.css';
 
@@ -10,7 +10,7 @@ const AdoptPage: React.FC = () => {
     const iconStyle = { fontSize: '8rem' };
     const [{ pets, lastUpdate }] = usePets();
     const [index, setIndex] = useState(0);
-    const currentPet = pets[index];
+    const pet = pets[index];
 
     console.log({ pets, lastUpdate });
 
@@ -27,23 +27,23 @@ const AdoptPage: React.FC = () => {
             <IonContent fullscreen>
                 <IonCard class="full-page flex flex-column">
                     <IonCardHeader>
-                        <IonCardTitle>{currentPet?.name || 'לא נמצאו חיות'}</IonCardTitle>
+                        <IonCardTitle>{pet?.name || 'לא נמצאו חיות'}</IonCardTitle>
                     </IonCardHeader>
-                    {currentPet ? (
+                    {pet ? (
                         <>
 
                             <IonCardContent>
-                                <img className="AdoptPage__animal-image" src={currentPet.profilePhoto}></img>
+                                <img className="AdoptPage__animal-image" alt={pet.name} src={pet.profilePhoto}></img>
                             </IonCardContent>
 
                             <IonCardContent>
-                                {currentPet.description}
+                                {pet.description}
                                 {' '}
-                                <a target="_blank">קרא/י עוד</a>
+                                <a href="#" target="_blank">קרא/י עוד</a>
                             </IonCardContent>
 
                             <IonCardContent>
-                                {currentPet.tags.map((tagName) => {
+                                {pet.tags.map((tagName) => {
                                     const tag = tagsData[tagName];
 
                                     return (

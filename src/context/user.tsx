@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 import { Pet } from './pets';
 
-export interface User {
+export type User = {
     loggedIn: boolean;
     name?: string;
     savedPets?: Pet[];

@@ -1,13 +1,11 @@
 import {
-  IonContent, IonHeader, IonPage, IonCard, IonItem, IonIcon, IonLabel, IonButton, IonChip,
-  IonCardHeader, IonThumbnail, IonImg, IonListHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonTitle, IonToolbar
+  IonContent, IonHeader, IonPage, IonCard, IonIcon, IonLabel, IonChip,
+  IonCardHeader, IonImg, IonListHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonTitle, IonToolbar
 } from '@ionic/react';
-import { home, person, barbell } from 'ionicons/icons';
 import { format } from 'date-fns';
 import { useContext } from 'react';
 import UserContext from '../context/user';
-import { colors } from '../utils/colors';
-import { tags, tagsData } from '../utils/tags';
+import { tagsData } from '../utils/tags';
 import './Tab1.css';
 
 const HomePage: React.FC = () => {

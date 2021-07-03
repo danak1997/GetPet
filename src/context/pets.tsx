@@ -33,7 +33,7 @@ export const usePets = (): PetCtx => {
             setPetsState({ pets: result, lastUpdate: new Date() });
             setTimeout(dismiss, 500);
         })();
-    }, []);
+    }, [present, dismiss, setPetsState]);
 
     return [petsState, setPetsState];
 }

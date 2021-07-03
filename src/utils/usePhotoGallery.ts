@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { isPlatform } from "@ionic/react";
+// import { useState, useEffect } from "react";
+// import { isPlatform } from "@ionic/react";
 
 import {
     Camera,
     CameraResultType,
     CameraSource,
-    Photo,
+    // Photo,
 } from "@capacitor/camera";
-import { Filesystem, Directory } from "@capacitor/filesystem";
-import { Storage } from "@capacitor/storage";
-import { Capacitor } from "@capacitor/core";
+// import { Filesystem, Directory } from "@capacitor/filesystem";
+// import { Storage } from "@capacitor/storage";
+// import { Capacitor } from "@capacitor/core";
 
 export default function usePhotoGallery() {
     const takePhoto = async () => {

@@ -4,8 +4,7 @@ import {
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { personCircle } from 'ionicons/icons';
-import { useState, useEffect, useContext } from 'react';
-import ExploreContainer from '../components/ExploreContainer';
+import { useState, useContext } from 'react';
 import './Tab1.css';
 import UserContext from '../context/user';
 import http from '../utils/http';
@@ -14,7 +13,7 @@ import { saveToken } from '../utils/auth';
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [user, setUser] = useContext(UserContext);
+    const [, setUser] = useContext(UserContext);
     const history = useHistory();
     const [present, dismiss] = useIonLoading();
 
