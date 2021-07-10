@@ -113,13 +113,13 @@ const App: React.FC = () => {
                   <Route exact path="/adopt">
                     <AdoptPage />
                   </Route>
-                  <Route path="/search">
+                  <Route exact path="/search">
                     <SearchPage />
                   </Route>
-                  <Route path="/camera">
+                  <Route exact path="/camera">
                     <CameraPage />
                   </Route>
-                  <Route path="/settings">
+                  <Route exact path="/settings">
                     <SettingsPage />
                   </Route>
                   <Route exact path="/">

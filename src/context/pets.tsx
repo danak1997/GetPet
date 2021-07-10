@@ -33,7 +33,8 @@ export const usePets = (): PetCtx => {
             setPetsState({ pets: result, lastUpdate: new Date() });
             setTimeout(dismiss, 500);
         })();
-    }, [present, dismiss, setPetsState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setPetsState]);
 
     return [petsState, setPetsState];
 }

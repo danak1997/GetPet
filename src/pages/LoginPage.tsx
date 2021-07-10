@@ -1,8 +1,7 @@
 import {
     IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRow, IonButton,
-    IonCol, IonIcon, IonItem, IonLabel, IonInput, IonGrid, useIonLoading
+    IonCol, IonIcon, IonItem, IonLabel, IonInput, IonGrid, useIonLoading, useIonRouter
 } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
 import { personCircle } from 'ionicons/icons';
 import { useState, useContext } from 'react';
 import './Tab1.css';
@@ -14,12 +13,12 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [, setUser] = useContext(UserContext);
-    const history = useHistory();
+    const router = useIonRouter();
     const [present, dismiss] = useIonLoading();
 
     const handleLogin = () => {
         present('מתחבר');
-        
+
         (async () => {
             try {
                 const { token } = await http('/api/user/login', {
@@ -33,13 +32,15 @@ const LoginPage: React.FC = () => {
                 if (!token) throw new Error('Invalid Token');
 
                 saveToken(token);
-                setUser({
-                    loggedIn: true
-                });
-                history.push('/');
             } catch {
             } finally {
-                dismiss();
+                setTimeout(() => {
+                    setUser({
+                        loggedIn: true
+                    });
+                    dismiss();
+                    router.push('/');
+                }, 500);
             }
         })()
     };

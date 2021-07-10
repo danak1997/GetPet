@@ -1,8 +1,9 @@
-import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonChip, IonLabel } from '@ionic/react';
+import { IonContent, IonPage, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonChip, IonLabel } from '@ionic/react';
 import { heartCircleOutline, chevronForward, chevronBack } from 'ionicons/icons';
 import { useState } from 'react';
 import { usePets } from '../context/pets';
 import { tagsData } from '../utils/tags';
+import { usePetModal } from './PetModal';
 
 import './AdoptPage.css';
 
@@ -11,15 +12,21 @@ const AdoptPage: React.FC = () => {
     const [{ pets, lastUpdate }] = usePets();
     const [index, setIndex] = useState(0);
     const pet = pets[index];
+    const { openPetModal } = usePetModal();
+    const canGoToPrevious = index > 0 && pets.length;
+    const canGoToNext = index < pets.length - 1;
+
+    const previousButtonColor = canGoToPrevious ? 'medium' : 'light';
+    const nextButtonColor = canGoToNext ? 'medium' : 'light';
 
     console.log({ pets, lastUpdate });
 
     const previousPet = () => {
-        setIndex(index - 1);
+        canGoToPrevious && setIndex(index - 1);
     }
 
     const nextPet = () => {
-        setIndex(index + 1);
+        canGoToNext && setIndex(index + 1);
     }
 
     return (
@@ -38,8 +45,7 @@ const AdoptPage: React.FC = () => {
 
                             <IonCardContent>
                                 {pet.description}
-                                {' '}
-                                <a href="#" target="_blank">קרא/י עוד</a>
+                                <IonButton onClick={() => openPetModal(pet.id)} fill="clear" size="small">קרא/י עוד</IonButton>
                             </IonCardContent>
 
                             <IonCardContent>
@@ -56,10 +62,11 @@ const AdoptPage: React.FC = () => {
                             </IonCardContent>
 
                             <IonCardContent class="bottom-stick flex justify-center">
-                                <IonIcon icon={chevronForward} style={iconStyle} color="medium" onClick={previousPet} />
+                                <IonIcon icon={chevronForward} style={iconStyle} color={previousButtonColor} onClick={previousPet} />
                                 <IonIcon onClick={() => alert('adopted')} icon={heartCircleOutline} style={iconStyle} color="danger" />
-                                <IonIcon icon={chevronBack} style={iconStyle} color="medium" onClick={nextPet} />
-                            </IonCardContent></>
+                                <IonIcon icon={chevronBack} style={iconStyle} color={nextButtonColor} onClick={nextPet} />
+                            </IonCardContent>
+                        </>
                     ) : <></>}
                 </IonCard>
             </IonContent>

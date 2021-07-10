@@ -1,16 +1,15 @@
-import { IonButton, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard } from '@ionic/react';
+import { IonButton, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, useIonRouter } from '@ionic/react';
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import UserContext from '../context/user';
 import { clearToken } from '../utils/auth';
 
 const SettingsPage: React.FC = () => {
-    const history = useHistory();
+    const router = useIonRouter();
     const [, setUser] = useContext(UserContext);
 
     const logout = async () => {
         clearToken();
-        history.push('/');
+        router.push('/');
         setUser({
             loggedIn: false
         });

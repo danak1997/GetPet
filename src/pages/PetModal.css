@@ -1,0 +1,10 @@
+.PetModal__images-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 1em;
+}
+
+.PetModal__container {
+    max-height: calc(100vh - 76px);
+    overflow: auto;
+}
