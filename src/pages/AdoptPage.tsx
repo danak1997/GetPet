@@ -1,11 +1,12 @@
 import { IonContent, IonPage, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonChip, IonLabel } from '@ionic/react';
 import { heartCircleOutline, chevronForward, chevronBack } from 'ionicons/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePets } from '../context/pets';
 import { tagsData } from '../utils/tags';
 import { usePetModal } from './PetModal';
 
 import './AdoptPage.css';
+import useAdoptPet from '../hooks/useAdoptPet';
 
 const AdoptPage: React.FC = () => {
     const iconStyle = { fontSize: '8rem' };
@@ -13,6 +14,7 @@ const AdoptPage: React.FC = () => {
     const [index, setIndex] = useState(0);
     const pet = pets[index];
     const { openPetModal } = usePetModal();
+    const { adoptPet } = useAdoptPet();
     const canGoToPrevious = index > 0 && pets.length;
     const canGoToNext = index < pets.length - 1;
 
@@ -28,6 +30,12 @@ const AdoptPage: React.FC = () => {
     const nextPet = () => {
         canGoToNext && setIndex(index + 1);
     }
+
+    useEffect(() => {
+        if (!pets[index] && index > 0) {
+            setIndex(index - 1)
+        }
+    }, [pets, index]);
 
     return (
         <IonPage>
@@ -63,7 +71,7 @@ const AdoptPage: React.FC = () => {
 
                             <IonCardContent class="bottom-stick flex justify-center">
                                 <IonIcon icon={chevronForward} style={iconStyle} color={previousButtonColor} onClick={previousPet} />
-                                <IonIcon onClick={() => alert('adopted')} icon={heartCircleOutline} style={iconStyle} color="danger" />
+                                <IonIcon onClick={() => adoptPet(pet)} icon={heartCircleOutline} style={iconStyle} color="danger" />
                                 <IonIcon icon={chevronBack} style={iconStyle} color={nextButtonColor} onClick={nextPet} />
                             </IonCardContent>
                         </>

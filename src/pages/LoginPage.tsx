@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
 
     const handleLogin = () => {
         present('מתחבר');
-
+        
         (async () => {
             try {
                 const { token } = await http('/api/user/login', {
@@ -32,14 +32,14 @@ const LoginPage: React.FC = () => {
                 if (!token) throw new Error('Invalid Token');
 
                 saveToken(token);
+                setUser({
+                    loggedIn: true
+                });
+                router.push('/');
             } catch {
             } finally {
                 setTimeout(() => {
-                    setUser({
-                        loggedIn: true
-                    });
                     dismiss();
-                    router.push('/');
                 }, 500);
             }
         })()

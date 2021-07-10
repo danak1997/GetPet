@@ -8,6 +8,7 @@ import {
   IonTabButton,
   IonTabs,
   IonLoading,
+  useIonRouter,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { search, home, paw, settings, camera } from 'ionicons/icons';
@@ -39,7 +40,7 @@ import { useEffect, useState } from 'react';
 import SearchPage from './pages/SearchPage';
 import CameraPage from './pages/CameraPage';
 import AdoptPage from './pages/AdoptPage';
-import { hasToken } from './utils/auth';
+import { clearToken, hasToken } from './utils/auth';
 import http from './utils/http';
 import SettingsPage from './pages/SettingsPage';
 import PetsContext, { PetsState } from './context/pets';
@@ -87,13 +88,19 @@ const App: React.FC = () => {
   useEffect(() => {
     (async () => {
       if (user.loggedIn && !user.name) {
-        setLoading(true);
-        const userData = await http('/api/user', { method: 'GET' });
-        setUser({
-          ...user,
-          ...userData
-        });
-        setLoading(false);
+        try {
+          setLoading(true);
+          const userData = await http('/api/user', { method: 'GET' });
+          setUser({
+            ...user,
+            ...userData
+          });
+          setLoading(false);
+        } catch {
+          setLoading(false);
+          clearToken();
+          setUser({ loggedIn: false });
+        }
       }
     })();
   }, [user, user.loggedIn]);

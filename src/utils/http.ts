@@ -24,6 +24,8 @@ async function http(url: string, {
         headers
     });
 
+    if (!res.ok) throw new Error(await res.json());
+
     return await res.json();
 }
 
