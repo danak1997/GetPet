@@ -10,9 +10,12 @@ async function http(url: string, {
     body
 }: FetchOptions) {
     const headers: HeadersInit = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Accept': 'application/json'
     };
+
+    if (!(body instanceof FormData)) {
+        headers['Content-Type'] = 'application/json';
+    }
 
     if (hasToken()) {
         headers.Authorization = `Bearer ${getToken()}`;

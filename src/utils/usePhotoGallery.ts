@@ -14,7 +14,7 @@ import {
 export default function usePhotoGallery() {
     const takePhoto = async () => {
         const image = await Camera.getPhoto({
-            resultType: CameraResultType.Uri,
+            resultType: CameraResultType.DataUrl,
             source: CameraSource.Camera,
             quality: 100,
         });
