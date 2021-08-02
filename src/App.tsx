@@ -44,6 +44,7 @@ import { clearToken, hasToken } from './utils/auth';
 import http from './utils/http';
 import SettingsPage from './pages/SettingsPage';
 import PetsContext, { PetsState } from './context/pets';
+import SignUpPage from './pages/SignUpPage';
 
 const tabs = [
   {
@@ -143,9 +144,17 @@ const App: React.FC = () => {
                 </IonTabBar>
               </IonTabs>
             ) : (
-              <Route path="*">
-                <LoginPage />
-              </Route>
+              <>
+                <Route path="/login">
+                  <LoginPage />
+                </Route>
+                <Route path="/signup">
+                  <SignUpPage />
+                </Route>
+                <Route path="*">
+                  <Redirect to="/login" />
+                </Route>
+              </>   
             )}
           </IonReactRouter>
         </IonApp>

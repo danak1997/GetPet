@@ -3,7 +3,9 @@ import {
   IonCardHeader, IonImg, IonListHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonTitle, IonToolbar, useIonModal
 } from '@ionic/react';
 import { format } from 'date-fns';
+import { paw } from 'ionicons/icons';
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import UserContext from '../context/user';
 import { tagsData } from '../utils/tags';
 import { usePetModal } from './PetModal';
@@ -24,9 +26,19 @@ const HomePage: React.FC = () => {
             <IonTitle size="large">ראשי</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonListHeader lines="none">
+        {user?.savedPets?.length !== 0 && <IonListHeader lines="none">
           נשמרו לאחרונה
-        </IonListHeader>
+        </IonListHeader>}
+        {!user?.savedPets?.length && (
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>אין עדיין חיות שמורות</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+            עבור ל<Link to="/adopt">עמוד האימוץ</Link> כדי לשמור חיות
+            </IonCardContent>
+          </IonCard>
+        )}
         {user?.savedPets?.map((animal) => (
           <IonCard button key={animal.id} onClick={() => openPetModal(animal.id)}>
             <IonImg src={animal.profilePhoto} />

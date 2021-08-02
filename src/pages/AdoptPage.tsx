@@ -52,24 +52,26 @@ const AdoptPage: React.FC = () => {
                             </IonCardContent>
 
                             <IonCardContent>
-                                {pet.description}
+                                <IonLabel class="AdoptPage__description">{pet.description}</IonLabel>
                                 <IonButton onClick={() => openPetModal(pet.id)} fill="clear" size="small">קרא/י עוד</IonButton>
                             </IonCardContent>
 
-                            <IonCardContent>
-                                {pet.tags.map((tagName) => {
-                                    const tag = tagsData[tagName];
+                            <IonCardContent style={{ padding: '0 10px' }}>
+                                <div style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>
+                                    {pet.tags.map((tagName) => {
+                                        const tag = tagsData[tagName];
 
-                                    return (
-                                        <IonChip key={tag.text} outline>
-                                            <IonIcon icon={tag.icon} color={tag.color} />
-                                            <IonLabel>{tag.text}</IonLabel>
-                                        </IonChip>
-                                    );
-                                })}
+                                        return (
+                                            <IonChip key={tag.text} outline>
+                                                <IonIcon icon={tag.icon} color={tag.color} />
+                                                <IonLabel>{tag.text}</IonLabel>
+                                            </IonChip>
+                                        );
+                                    })}
+                                </div>
                             </IonCardContent>
 
-                            <IonCardContent class="bottom-stick flex justify-center">
+                            <IonCardContent class="bottom-stick flex justify-center" style={{ padding: 0 }}>
                                 <IonIcon icon={chevronForward} style={iconStyle} color={previousButtonColor} onClick={previousPet} />
                                 <IonIcon onClick={() => adoptPet(pet)} icon={heartCircleOutline} style={iconStyle} color="danger" />
                                 <IonIcon icon={chevronBack} style={iconStyle} color={nextButtonColor} onClick={nextPet} />

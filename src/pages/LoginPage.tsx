@@ -8,6 +8,7 @@ import './Tab1.css';
 import UserContext from '../context/user';
 import http from '../utils/http';
 import { saveToken } from '../utils/auth';
+import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -100,7 +101,7 @@ const LoginPage: React.FC = () => {
                             </p>
                             <IonButton expand="block" onClick={handleLogin}>התחבר</IonButton>
                             <p style={{ fontSize: "medium" }}>
-                                עדיין אין לך משתמש? <a href="#">הירשם כאן!</a>
+                                עדיין אין לך משתמש? <Link to="/signup">הירשם כאן!</Link>
                             </p>
                         </IonCol>
                     </IonRow>
