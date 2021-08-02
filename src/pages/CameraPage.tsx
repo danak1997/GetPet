@@ -1,12 +1,13 @@
 import { IonButton, IonCard, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonLabel, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
-import { apertureOutline, warningOutline, camera } from 'ionicons/icons';
-import { useState } from 'react';
+import { apertureOutline, warningOutline, camera, videocam } from 'ionicons/icons';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 import { uploadImage } from '../utils/image';
 import { getLocation } from '../utils/location';
 import usePhotoGallery from '../utils/usePhotoGallery';
 import { Pie } from 'react-chartjs-2';
 import http from '../utils/http';
 import { useReportModal } from './ReportModal';
+import { getFrames } from '../utils/video';
 
 const createChartData = ({ dogNames, dogPercents }: { dogNames: string[], dogPercents: number[] }) => {
     return {
@@ -50,6 +51,16 @@ const CameraPage: React.FC = () => {
         }
     }
 
+    const getVideo = async (e: ChangeEvent<HTMLInputElement>) => {
+        const vid = e.target.files?.[0];
+        if (!vid) return;
+        const url = URL.createObjectURL(vid);
+        const frames = await getFrames(url, 1);
+        setImg(frames[0]);
+        setChartData(undefined);
+        setSimilarPets(undefined);
+    }
+
     const recognize = async () => {
         if (!img) return;
  
@@ -67,6 +78,7 @@ const CameraPage: React.FC = () => {
             console.log(result);
         } catch (error) {
             console.error(error);
+            dismiss();
         }
     }
 
@@ -98,6 +110,14 @@ const CameraPage: React.FC = () => {
                         <IonIcon icon={camera}></IonIcon>
                     </IonFabButton>
                 </IonFab>
+                <label>
+                    <IonFab vertical={img ? 'bottom' : 'center'} horizontal={img ? 'end' : 'center'} style={{ marginTop: img ? '' : '120px', bottom: img ? '76px' : '', position: 'fixed' }} slot="fixed">
+                        <IonFabButton color="danger">
+                            <IonIcon icon={videocam}></IonIcon>
+                        </IonFabButton>
+                    </IonFab>
+                    <input type="file" accept="video/mp4,video/x-m4v,video/*" style={{ display: 'none' }} onChange={getVideo}></input>
+                </label>
                 {img && (
                     <IonCard>
                         <IonImg src={img} />
