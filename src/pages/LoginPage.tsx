@@ -4,7 +4,6 @@ import {
 } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
 import { useState, useContext } from 'react';
-import './Tab1.css';
 import UserContext from '../context/user';
 import http from '../utils/http';
 import { saveToken } from '../utils/auth';

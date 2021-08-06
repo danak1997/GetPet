@@ -62,7 +62,7 @@ const AdoptPage: React.FC = () => {
                                         const tag = tagsData[tagName];
 
                                         return (
-                                            <IonChip key={tag.text} outline>
+                                            <IonChip key={tagName} outline>
                                                 <IonIcon icon={tag.icon} color={tag.color} />
                                                 <IonLabel>{tag.text}</IonLabel>
                                             </IonChip>

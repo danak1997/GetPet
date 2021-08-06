@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import UserContext from '../context/user';
 import { tagsData } from '../utils/tags';
 import { usePetModal } from './PetModal';
-import './Tab1.css';
 
 const HomePage: React.FC = () => {
   const [user] = useContext(UserContext);
