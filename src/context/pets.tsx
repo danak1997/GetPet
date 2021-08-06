@@ -9,6 +9,10 @@ export type Pet = {
     profilePhoto: string,
     tags: string[],
     updatedAt: string
+    addedBy: {
+        id: string;
+        name: string;
+    }
 }
 
 export type PetsState = {

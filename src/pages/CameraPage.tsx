@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonLabel, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
+import { IonButton, IonCard, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonLabel, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonAlert, useIonLoading } from '@ionic/react';
 import { apertureOutline, warningOutline, camera, videocam } from 'ionicons/icons';
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 import { uploadImage } from '../utils/image';
@@ -39,6 +39,7 @@ const CameraPage: React.FC = () => {
     const { takePhoto } = usePhotoGallery();
     const [present, dismiss] = useIonLoading();
     const { openReportModal } = useReportModal();
+    const [presentChooseType] = useIonAlert();
 
     const getPhoto = async () => {
         try {
@@ -61,19 +62,37 @@ const CameraPage: React.FC = () => {
         setSimilarPets(undefined);
     }
 
-    const recognize = async () => {
+    const choostType = () => {
+        presentChooseType({
+            header: 'זהה חיה',
+            message: 'בחר את סוג החיה שברצונך לזהות',
+            buttons: [
+              { text: 'כלב', handler: () => recognize() },
+              { text: 'חתול', handler: () => recognize('cat') },
+            ],
+            onDidDismiss: (e) => console.log('Closed without recognizing'),
+          });
+    };
+
+    const recognize = async (petType = 'dog') => {
         if (!img) return;
  
         try {
             present('מזהה...');
-            const result = await uploadImage(img);
+            const result = await uploadImage(img, petType);
             const chartData = createChartData({
                 dogNames: Object.keys(result),
                 dogPercents: Object.values(result).map(Number),
             })
             setChartData(chartData);
-            const _similarPets = await Promise.allSettled(chartData.labels.map((pet: string) => http(`/api/pets/images/breed/${pet}`, { method: 'GET' })));
-            setSimilarPets(_similarPets.filter(p => p.status === 'fulfilled').map((p: any) => p.value.url));
+
+            if (petType === 'dog') {
+                const _similarPets = await Promise.allSettled(chartData.labels.map((pet: string) => http(`/api/pets/images/breed/${pet}`, { method: 'GET' })));
+                setSimilarPets(_similarPets.filter(p => p.status === 'fulfilled').map((p: any) => p.value.url));
+            } else {
+                setSimilarPets([]);
+            }
+
             dismiss();
             console.log(result);
         } catch (error) {
@@ -96,13 +115,13 @@ const CameraPage: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>צלם כלב</IonTitle>
+                    <IonTitle>צלם חיה</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">צלם כלב</IonTitle>
+                        <IonTitle size="large">צלם חיה</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonFab vertical={img ? 'bottom' : 'center'} horizontal={img ? 'end' : 'center'} style={{ transform: img ? '' : 'scale(3)' }} slot="fixed">
@@ -124,7 +143,7 @@ const CameraPage: React.FC = () => {
                         <IonGrid>
                             <IonRow>
                                 <IonCol>
-                                    <IonButton color="primary" fill="outline" expand="block" onClick={recognize}>
+                                    <IonButton color="primary" fill="outline" expand="block" onClick={choostType}>
                                         <IonIcon slot="end" icon={apertureOutline} />זהה
                                     </IonButton>
                                 </IonCol>
@@ -139,7 +158,7 @@ const CameraPage: React.FC = () => {
                                     <IonRow>
                                         <Pie data={chartData} />
                                     </IonRow>
-                                    {similarPets?.length && (
+                                    {similarPets?.length > 0 && (
                                         <>
                                              <IonHeader style={{ marginTop: 20 }}>
                                                 <IonToolbar>

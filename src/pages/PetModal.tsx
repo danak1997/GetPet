@@ -43,6 +43,9 @@ const PetModal = ({ petId, onDismiss }: PetModalProps) => {
                         <IonCardHeader>
                             <IonCardSubtitle>{format(new Date(pet.updatedAt), 'dd/MM/yy')}</IonCardSubtitle>
                             <IonCardTitle>{pet.name}</IonCardTitle>
+                            {pet?.addedBy?.name && (
+                              <IonCardSubtitle>נוסף על ידי {pet?.addedBy?.name}</IonCardSubtitle>
+                            )}
                         </IonCardHeader>
                         <IonCardContent>
                             {pet.description}

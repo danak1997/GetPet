@@ -44,6 +44,9 @@ const HomePage: React.FC = () => {
             <IonCardHeader>
               <IonCardSubtitle>{format(new Date(animal.updatedAt), 'dd/MM/yy')}</IonCardSubtitle>
               <IonCardTitle>{animal.name}</IonCardTitle>
+              {animal?.addedBy?.name && (
+                <IonCardSubtitle>נוסף על ידי {animal?.addedBy?.name}</IonCardSubtitle>
+              )}
             </IonCardHeader>
             <IonCardContent>
               {animal.description}

@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonChip, IonLabel } from '@ionic/react';
+import { IonContent, IonPage, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonChip, IonLabel, IonCardSubtitle } from '@ionic/react';
 import { heartCircleOutline, chevronForward, chevronBack } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { usePets } from '../context/pets';
@@ -43,6 +43,7 @@ const AdoptPage: React.FC = () => {
                 <IonCard class="full-page flex flex-column">
                     <IonCardHeader>
                         <IonCardTitle>{pet?.name || 'לא נמצאו חיות'}</IonCardTitle>
+                        {pet && (<IonCardSubtitle>נוסף על ידי {pet?.addedBy?.name}</IonCardSubtitle>)}
                     </IonCardHeader>
                     {pet ? (
                         <>
