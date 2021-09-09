@@ -7,6 +7,7 @@ export type Pet = {
     name: string,
     description: string,
     profilePhoto: string,
+    location: string,
     tags: string[],
     updatedAt: string
     addedBy: {

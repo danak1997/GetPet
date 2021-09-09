@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
           <IonCard button key={animal.id} onClick={() => openPetModal(animal.id)}>
             <IonImg src={animal.profilePhoto} />
             <IonCardHeader>
-              <IonCardSubtitle>{format(new Date(animal.updatedAt), 'dd/MM/yy')}</IonCardSubtitle>
+              <IonCardSubtitle>{format(new Date(animal.updatedAt), 'dd/MM/yy')} - {animal.location}</IonCardSubtitle>
               <IonCardTitle>{animal.name}</IonCardTitle>
               {animal?.addedBy?.name && (
                 <IonCardSubtitle>נוסף על ידי {animal?.addedBy?.name}</IonCardSubtitle>

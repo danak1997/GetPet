@@ -8,6 +8,7 @@ import { Pet } from '../context/pets';
 import { tagsData } from '../utils/tags';
 
 import './PetModal.css';
+import { navigate } from 'ionicons/icons';
 
 type PetModalProps = {
     petId: string;
@@ -41,7 +42,7 @@ const PetModal = ({ petId, onDismiss }: PetModalProps) => {
                     <IonCard class="PetModal__container">
                         <IonImg src={pet.profilePhoto} />
                         <IonCardHeader>
-                            <IonCardSubtitle>{format(new Date(pet.updatedAt), 'dd/MM/yy')}</IonCardSubtitle>
+                            <IonCardSubtitle>{format(new Date(pet.updatedAt), 'dd/MM/yy')} - {pet.location}</IonCardSubtitle>
                             <IonCardTitle>{pet.name}</IonCardTitle>
                             {pet?.addedBy?.name && (
                               <IonCardSubtitle>נוסף על ידי {pet?.addedBy?.name}</IonCardSubtitle>
@@ -67,12 +68,15 @@ const PetModal = ({ petId, onDismiss }: PetModalProps) => {
                                 'https://images.dog.ceo/breeds/terrier-norfolk/n02094114_2631.jpg',
                                 'https://images.dog.ceo/breeds/cockapoo/Scout.jpg',
                                 'https://images.dog.ceo/breeds/bulldog-boston/n02096585_11614.jpg',
-                                'https://images.dog.ceo/breeds/chow/n02112137_3570.jpg',
-                                'https://images.dog.ceo/breeds/terrier-irish/n02093991_3968.jpg'].map((photo) => (
+                                'https://images.dog.ceo/breeds/chow/n02112137_3570.jpg'].map((photo) => (
                                     <IonThumbnail key={photo}>
                                         <img src={photo} alt={pet.name} />
                                     </IonThumbnail>
                                 ))}
+                        </IonCardContent>
+                        <IonCardContent>
+                            <IonButton fill="outline" style={{ width: '100%' }} href={`https://www.google.com/maps?q=${pet.location}`}>
+                            <IonIcon slot="end" icon={navigate} />נווט למיקום האימוץ</IonButton>
                         </IonCardContent>
                     </IonCard>
                 </>
